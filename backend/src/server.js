@@ -22,9 +22,16 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static(__dirname));
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true,
-}));
+    origin: [
+      "http://localhost:5173",
+      "http://192.168.217.49:5173",
+      "https://8479-152-59-85-173.ngrok-free.app",
+      "https://*.ngrok-free.app"
+    ],
+    credentials: true,
+  }));
+  
+  
 
 
 // HAVE TO TURN OFF THIS SECTION IF USB TO ARDUINO IS NOT CONNECTED
@@ -50,7 +57,7 @@ app.use(cors({
 // WEBSOCKET CONNECTION ENDS HERE
 
 const PORT = process.env.PORT;
-server.listen(PORT, () => {
+server.listen(PORT,'0.0.0.0', () => {
     console.log("Server started at port 4000");
     connectDB()
     .then((res)=>{

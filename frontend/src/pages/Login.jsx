@@ -28,10 +28,8 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    // isLoggingIn(true);
     setLoading(true);
     try {
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
       e.preventDefault();
       login(formData, navigate);
       // alert("Login Successful");

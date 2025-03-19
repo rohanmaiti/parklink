@@ -33,7 +33,12 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
 
   const openCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const constraints = {
+        video: {
+          facingMode: 'environment' // Use the rear camera
+        }
+      };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -42,10 +47,16 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
         startScanning();
       }
     } catch (error) {
-      console.error('Error accessing camera:', error);
-      alert('Unable to access camera.');
+      if (error.name === 'NotAllowedError') {
+        alert('Camera access denied. Please allow camera permissions in your browser settings.');
+      } else if (error.name === 'NotFoundError') {
+        alert('No camera found. Please check your device camera.');
+      } else {
+        alert('Unable to access the camera: ' + error.message);
+      }
     }
   };
+  
 
   const stopCamera = () => {
     if (streamRef.current) {

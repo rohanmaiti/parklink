@@ -5,7 +5,7 @@ const protectedRoute = require("../middlewire/auth.middlewire.js");
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
-// router.put("/update-profile",protectedRoute, updateProfile);
+router.put("/update-profile",protectedRoute, updateProfile);
 
 router.get("/check",protectedRoute,checkAuth);
 module.exports = router;

@@ -48,8 +48,7 @@ export const useAuthStore = create((set)=>{
 
         // HANDLING LOGIN
         login: async (data , navigate)=>{
-            try {
-              // const navigate = useNavigate();
+            try { 
               set({isLoggingIng : true})
               const res = await axiosInstance.post("/auth/login",data);
               set({ authUser: res.data });

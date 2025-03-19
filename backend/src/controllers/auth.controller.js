@@ -41,8 +41,6 @@ async function signup(req,res){
     catch (error) {
     res.status(500).send({message:"Server Error "+error.message});
     }
-    
-
 }
 
 // LOGIN
@@ -84,28 +82,48 @@ function logout(req,res){
  
 
 // UPDATE PROFILE
-// async function updateProfile(req,res){
-//     try {
-//         const { profilePic } = req.body;
-//         const userId = req.user._id;
+async function updateProfile(req,res){
+    console.log("updateProfile",req.body);
+    try {
+        if(req.body.change == 'both'){
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+             const updatedUser = await User.findOneAndUpdate(
+                {email:req.user.email},
+                { email: req.body.email , password:hashedPassword},
+                { new: true }
+              );
+            req.user = updatedUser;  
+            res.status(200).json(updatedUser);
+
+        }
+        else if(req.body.change == "password"){
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+             const updatedUser = await User.findOneAndUpdate(
+                {email:req.user.email},
+                { password:hashedPassword},
+                { new: true }
+              );
+            req.user = updatedUser;  
+            res.status(200).json(updatedUser);
+        }
+        else{
+            const updatedUser = await User.findOneAndUpdate(
+                {email:req.user.email},
+                { email:req.body.email},
+                { new: true }
+              );
+            req.user = updatedUser;  
+            res.status(200).json(updatedUser);
+        }
+        
     
-//         if (!profilePic) {
-//           return res.status(400).json({ message: "Profile pic is required" });
-//         }
-    
-//         const uploadResponse = await cloudinary.uploader.upload(profilePic);
-//         const updatedUser = await User.findByIdAndUpdate(
-//           userId,
-//           { profilePic: uploadResponse.secure_url },
-//           { new: true }
-//         );
-    
-//         res.status(200).json(updatedUser);
-//       } catch (error) {
-//         console.log("error in update profile:", error);
-//         res.status(500).json({ message: "Internal server error" });
-//       }
-// }
+      } catch (error) {
+        console.log("error in update profile:", error);
+        res.status(500).json({ message: "Internal server error" });
+      }
+}
 
 // CHECK AUTH FOR HANDLING REQUEST
 function checkAuth(req,res){
@@ -121,6 +139,6 @@ module.exports = {
     signup,
     login,
     logout,
-    // updateProfile,
+    updateProfile,
     checkAuth
 }
