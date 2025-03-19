@@ -43,7 +43,7 @@ export const Navbar = ( ) => {
               <a href="#service" className="hover:text-violet-400">Services</a>
               <a href="#locate" className="hover:text-violet-400">Locate</a>
               <a href="#detail" className="hover:text-violet-400">Detail</a>
-              <a href="#about" className="hover:text-violet-400">About us</a>
+              <a href="#about" className="hover:text-violet-400">About</a>
             </nav>
         </div>
        
@@ -58,7 +58,7 @@ export const Navbar = ( ) => {
                 className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:scale-105 transition"
               >
                 <img
-                  src={authUser.profilePic || "/default-profile.png"}
+                  src={ "https://th.bing.com/th/id/OIP.IQqAakFVSW2T6n9Kibpe2AAAAA?rs=1&pid=ImgDetMain"}
                   alt="Profile"
                   className="w-10 h-10 rounded-full"
                 />
@@ -131,7 +131,7 @@ export const Navbar = ( ) => {
           <a href="#service" className="block hover:text-violet-400">Services</a>
           <a href="#locate" className="block hover:text-violet-400">Locate</a>
           <a href="#detail" className="block hover:text-violet-400">Detail</a>
-          <a href="#about" className="block hover:text-violet-400">About us</a>
+          <a href="#about" className="block hover:text-violet-400">About</a>
           {authUser ? (
             <div className="mt-4 border-t pt-2">
               <button

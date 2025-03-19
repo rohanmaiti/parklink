@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../store/useAuthStore';
 
 const parkingData = [
   { name: 'Chitkara University', cost: 100, path: 'chitkara' },
@@ -11,6 +12,7 @@ const parkingData = [
 const BookSlot = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const { hasParkingSlot } = useAuthStore();
 
   const filteredData = parkingData.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -18,7 +20,7 @@ const BookSlot = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 relative">
-      <h1 className="text-4xl font-bold text-center mb-8">Welcome  to ParkLink</h1>
+      <h1 className="text-4xl font-bold text-center mb-8">Welcome to ParkLink</h1>
       
       <div className="flex justify-center mb-8">
         <input
@@ -41,10 +43,13 @@ const BookSlot = () => {
             <div
               key={index}
               onClick={() => navigate(`/parking/${item.path}`)}
-              className="cursor-pointer flex justify-between items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300"
+              className="cursor-pointer flex justify-between items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 relative"
             >
               <span className="text-xl font-semibold">{item.name}</span>
               <span className="text-orange-500 font-medium">Cost per hour: {item.cost} Rs</span>
+              {hasParkingSlot === item.name && (
+                <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full"></div>
+              )}
             </div>
           ))
         )}

@@ -79,6 +79,12 @@ export const Login = () => {
       <p className="text-xs text-center sm:px-6 text-gray-400">Don't have an account?
         <a href="/signup" className="underline text-gray-300"> Sign up</a>
       </p>
+      <button
+        className="absolute bottom-4 left-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600"
+        onClick={() => navigate("/")}
+      >
+        ← Back
+      </button>
     </div>
   );
 };

@@ -11,7 +11,7 @@ const { Socket } = require("dgram");
 const dotenv = require("dotenv");
 dotenv.config();
 const server = http.createServer(app);
-const io = new Server(server);
+// const io = new Server(server);
 
 const connectDB = require("./lib/db.js");
 const exp = require("constants");
@@ -28,6 +28,7 @@ app.use(cors({
       "https://8479-152-59-85-173.ngrok-free.app",
       "https://*.ngrok-free.app"
     ],
+    methods: ['GET', 'POST'],
     credentials: true,
   }));
   
@@ -36,6 +37,12 @@ app.use(cors({
 
 // HAVE TO TURN OFF THIS SECTION IF USB TO ARDUINO IS NOT CONNECTED
 // WEBSOCKET CONNECTION START HERE
+// const io = new Server(server, {
+//   cors: {
+//     origin: 'http://localhost:5173',
+//     methods: ['GET', 'POST']
+//   }
+// });
 // const port = new SerialPort({
 //     path: 'COM3',
 //     baudRate: 9600
@@ -47,6 +54,7 @@ app.use(cors({
 //     socket.emit('initialData', { message: 'Initial data' });
 //     // Listen for data from the Arduino and emit it to the connected clients
 //     parser.on('data', (data) => {
+//         console.log('Received from Arduino:', data);
 //         io.emit('arduinoData', { sensorData: data });
 //     });
 //     // Disconnect event
@@ -72,3 +80,11 @@ const authRoutes = require("./routes/auth.route.js");
 const parkingRoutes = require("./routes/parking.route.js");
 app.use("/api/auth", authRoutes);
 app.use("/api/parking", parkingRoutes);
+
+const __dirname = path.resolve();
+if(process.env.NODE_ENV == "production"){
+  app.use(express.static(path.join(__dirname,"../frontend/dist")));
+  app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend","dist","index.html"));
+  })
+}

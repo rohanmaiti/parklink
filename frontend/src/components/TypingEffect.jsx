@@ -4,8 +4,8 @@ export const TypingEffect = ({ text }) => {
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [index, setIndex] = useState(0);
-  const typingSpeed = 100;
-  const deletingSpeed = 50;
+  const typingSpeed = 120;
+  const deletingSpeed = 60;
   const pauseTime = 1500;
 
   useEffect(() => {
@@ -28,5 +28,10 @@ export const TypingEffect = ({ text }) => {
     }
   }, [index, isDeleting, text]);
 
-  return <h1 className="text-5xl font-bold text-center">{displayText}</h1>;
+  return (
+    <h2 className="text-3xl font-semibold text-white">
+      {displayText}
+      <span className="animate-blink">|</span>
+    </h2>
+  );
 };

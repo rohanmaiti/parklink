@@ -1,8 +1,12 @@
 import React from 'react';
 import { Navbar } from '../components/Navbar';
-import { ImageSlider } from '../components/Imageslider';
+// import { ImageSlider } from '../components/Imageslider';
 import { TypingEffect } from '../components/TypingEffect';
 import { Services } from '../components/Services';
+import { LocateSection } from '../components/LocateSection';
+import { DetailSection } from '../components/Detailsection';
+import { AboutSection } from '../components/AboutSection';
+import { HomeSection } from '../components/HomeSection';
 
 export const Landingpage = ({loginUser, setLoginuser}) => {
   return (
@@ -14,12 +18,13 @@ export const Landingpage = ({loginUser, setLoginuser}) => {
 
         {/* Home Section */}
         <section id="home" className="min-h-screen flex flex-col md:flex-row bg-blue-100">
-          <div className=" w-full md:w-3/5 p-4">
+          {/* <div className=" w-full md:w-3/5 p-4">
             <ImageSlider />
           </div>
           <div className="flex justify-center items-center  w-full md:w-2/5 p-4">
             <TypingEffect text="Welcome to ParkLink, book your slot now!" />
-          </div>
+          </div> */}
+          <HomeSection />
         </section>
 
         {/* Service Section */}
@@ -30,17 +35,20 @@ export const Landingpage = ({loginUser, setLoginuser}) => {
 
         {/* Locate Section */}
         <section id="locate" className="min-h-screen flex items-center justify-center bg-yellow-100 p-4">
-          <h1 className="text-4xl text-center">Locate Section</h1>
+          {/* <h1 className="text-4xl text-center">Locate Section</h1> */}
+          <LocateSection/>
         </section>
 
         {/* Detail Section */}
         <section id="detail" className="min-h-screen flex items-center justify-center bg-red-100 p-4">
-          <h1 className="text-4xl text-center">Detail Section</h1>
+          {/* <h1 className="text-4xl text-center">Detail Section</h1> */}
+          <DetailSection/>
         </section>
 
          {/* Detail Section */}
-         <section id="about" className="min-h-screen flex items-center justify-center bg-red-100 p-4">
-          <h1 className="text-4xl text-center">About us Section</h1>
+         <section id="about" className="min-h-screen flex items-center justify-center bg-red-100 p-2">
+          {/* <h1 className="text-4xl text-center">About us Section</h1> */}
+          <AboutSection/>
         </section>
       </div>
     </>

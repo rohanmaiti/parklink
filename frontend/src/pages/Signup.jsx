@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../store/useAuthStore';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const { signup, isSigningUp } = useAuthStore();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,7 +30,7 @@ export const Signup = () => {
     // isSigningUp(true);
     try {
       // alert(JSON.stringify(formData));
-      signup(formData);
+      signup(formData, navigate);
     } catch (error) {
       alert("Signup Failed");
     }
@@ -60,6 +61,12 @@ export const Signup = () => {
       <p className="text-xs text-center sm:px-6 text-gray-400">Already have an account?
         <a href="/login" className="underline text-gray-300"> Log in</a>
       </p>
+      <button
+        className="absolute bottom-4 left-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600"
+        onClick={() => navigate("/")}
+      >
+        ← Back
+      </button>
     </div>
   );
 };

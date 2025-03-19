@@ -30,7 +30,7 @@ export const useAuthStore = create((set)=>{
         },
 
         // HANDLING SIGNUP
-        signup: async(data)=>{
+        signup: async(data, navigate)=>{
           // alert("useAuthStore, "+JSON.stringify(data));
          try {
             set({ isSigningUp: true });
@@ -38,6 +38,7 @@ export const useAuthStore = create((set)=>{
             // alert(JSON.stringify(res.data));
             set({ authUser: res.data });
             toast.success("Account created successfully");
+            navigate("/bookslots");
           } catch (error) {
             console.log(error);
             toast.error(error.response.data.message);

@@ -9,7 +9,7 @@ export const ProfilePage = () => {
   const [password, setPassword] = useState('');
   const [showEmailInput, setShowEmailInput] = useState(false);
   const [showPasswordInput, setShowPasswordInput] = useState(false);
-  const {updateProfile} = useAuthStore();
+  const {updateProfile, authUser} = useAuthStore();
 
   const handleUpdate = () => {
     if (!email && !password) {
@@ -21,7 +21,7 @@ export const ProfilePage = () => {
     console.log('Updating Email:', email);
     console.log('Updating Password:', password);
     if(email !='' && password != ''){
-           alert("hii");
+          //  alert("hii");
            if (password.length < 6) return toast.error('Password must be of 6 character');
            return updateProfile({password:password, email:email,  change:"both"});
     }
@@ -54,7 +54,7 @@ export const ProfilePage = () => {
               className="w-full p-2 rounded bg-gray-700 text-white mt-2"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter new email"
+              placeholder={authUser.email}
             />
           )}
         </div>

@@ -6,7 +6,7 @@ export const Services = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900">
-            Ezy-Parking is a parking service with 
+            ParkLink is a parking service with 
             <span className="text-orange-500"> awesome features</span>
           </h2>
         </div>

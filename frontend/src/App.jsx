@@ -16,26 +16,25 @@ import { ProfilePage } from './pages/ProfilePage'
 import { Parking } from './components/Parking'
 import { ProtectedRoute } from './pages/ProtectedRoute'
 function App() {
-  const {checkAuth} = useAuthStore();
+  const {checkAuth, authUser} = useAuthStore();
   const [count, setCount] = useState(0)
   const [loginUser , setLoginuser] = useState(undefined);
   const navigate = useNavigate();
   useEffect(()=>{
     checkAuth();
-    navigate("/");
   },[checkAuth]);
   return (
     <>
       <Routes> 
        <Route path="/" element={<Landingpage  setLoginuser={setLoginuser} />}/> 
-       <Route path='/login' element={<Login  setLoginuser={setLoginuser} />}/>
-       <Route path='/signup' element={<Signup  setLoginuser={setLoginuser} />}/>
-       <Route element={<ProtectedRoute/>}>
+        <Route path='/login' element={<Login  setLoginuser={setLoginuser} />}/>
+        <Route path='/signup' element={<Signup  setLoginuser={setLoginuser} />}/>
+       {/* <Route element={<ProtectedRoute/>}> */}
        <Route path="/bookslots" element={<BookSlot/>}/>
        <Route path="/parking/*" element={<ParkingSpace />} />
        <Route path="/checkout" element={<Checkout/>} />
        <Route path="/profile" element={<ProfilePage/>} />
-       </Route>
+       {/* </Route> */}
       </Routes>
       <Toaster/>
     </>
