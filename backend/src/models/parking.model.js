@@ -6,6 +6,7 @@ const parkingLogSchema = new mongoose.Schema({
     type:String,
     require:true
   },
+  slotName: String, // Track which slot user parked in
   entryTime: Date,
   exitTime: Date,
 });

@@ -11,6 +11,7 @@ import { Landingpage } from './pages/Landingpage'
 import { useAuthStore } from './store/useAuthStore'
 import BookSlot from './pages/BookSlot'
 import { ParkingSpace } from './components/ParkingSpace'
+import { Checkout } from './pages/Checkout'
 function App() {
   const {checkAuth} = useAuthStore();
   const [count, setCount] = useState(0)
@@ -26,6 +27,7 @@ function App() {
        <Route path='/signup' element={<Signup loginUser={loginUser} setLoginuser={setLoginuser} />}/>
        <Route path="/bookslots" element={<BookSlot/>}/>
        <Route path="/parking/*" element={<ParkingSpace />} />
+       <Route path="/checkout" element={<Checkout/>} />
       </Routes>
       <Toaster/>
     </>

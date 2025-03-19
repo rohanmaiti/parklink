@@ -10,14 +10,18 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
   const videoRef = useRef(null);
   let streamRef = useRef(null);
   const [scanning, setScanning] = useState(false);
-  const [parkingStarted, setParkingStarted] = useState({status:false, name:null});
-  const { checkParkingStatus } = useAuthStore();
+  const [parkingStarted, setParkingStarted] = useState({ status: false, name: null });
+  const { checkParkingStatus, setParkingSlot, hasParkingSlot } = useAuthStore();
+  const [activeParkingSlot, setActiveParkingSlot] = useState(undefined);
 
   useEffect(() => {
     const fetchParkingStatus = async () => {
       try {
         const status = await checkParkingStatus(name);
-        setParkingStarted({status:status.active,name:status.name});
+        setParkingStarted({ status: status.active, name: status.name });
+        if (status.active) {
+          setActiveParkingSlot(name);
+        }
       } catch (error) {
         console.error('Error fetching parking status:', error);
       }
@@ -25,7 +29,7 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
 
     fetchParkingStatus();
     return () => stopCamera();
-  }, [checkParkingStatus]);
+  }, []);
 
   const openCamera = async () => {
     try {
@@ -58,21 +62,33 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
         console.log('QR Code detected:', result);
         stopCamera();
         try {
-        //   console.log(result.data);
-        //   alert(result.data);
-          await axiosInstance.post('/parking/entry', { qrData: result.data });
-          setParkingStarted(true);
-          new Audio('/beep-sound.mp3').play();
-          toast.success('Parking started successfully!');
+          if (!hasParkingSlot) {
+            await axiosInstance.post('/parking/entry', { qrData: result.data, name });
+            setParkingStarted({ status: true, name });
+            new Audio('/beep-sound.mp3').play();
+            toast.success('Parking started successfully!');
+            setParkingSlot(name);
+            setActiveParkingSlot(name);
+          } else {
+            const res = await axiosInstance.post('/parking/exit', { qrData: result.data, name });
+            setParkingStarted({ status: false, name: null });
+            setActiveParkingSlot(undefined);
+            setParkingSlot(undefined);
+            const duration = res.data.duration;
+            const totalCost = duration * cost;
+            toast.success(`Parking ended. Duration: ${res.data.duration} hours`);
+            navigate('/checkout', { state: { name, duration: res.data.duration, cost: totalCost } });
+          }
         } catch (error) {
-          console.error('Error starting parking:', error);
-          toast.error('Failed to start parking.');
+          console.error('Error managing parking:', error);
+          toast.error('Failed to manage parking.');
         }
       },
       { returnDetailedScanResult: true }
     );
     qrScanner.start();
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -90,10 +106,10 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
           <video ref={videoRef} className="w-full h-full object-cover" playsInline muted autoPlay />
         </div>
 
-        {(parkingStarted.status && name==parkingStarted.name) && <div className="text-center text-green-400 font-bold mb-4">Parking Started Successfully! Timer Active.</div>}
+        {(activeParkingSlot === name || (parkingStarted.status && name === parkingStarted.name)) && <div className="text-center text-green-400 font-bold mb-4">Parking Started Successfully! Timer Active.</div>}
         
-        <button className="w-full mb-6 px-4 py-2 bg-blue-500 rounded hover:bg-blue-600">
-          Get In / Get Out
+        <button className="w-full mb-6 px-4 py-2 bg-blue-500 rounded hover:bg-blue-600" onClick={openCamera}>
+          {hasParkingSlot === name ? 'Get Out' : 'Get In'}
         </button>
         
         <div className={`w-full text-center py-3 mb-4 rounded-lg ${slotsAvailable ? 'bg-green-500' : 'bg-red-500'}`}>

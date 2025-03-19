@@ -12,6 +12,9 @@ export const useAuthStore = create((set)=>{
         isUpdatingProfile:false,
         isCheckingAuth : true,
 
+        hasParkingSlot:undefined,
+        
+
         // CHECKING AUTH
         checkAuth : async()=>{
             try {
@@ -92,11 +95,20 @@ export const useAuthStore = create((set)=>{
     try {
       const data = {name : name};
       const res = await axiosInstance.post('/parking/status',data);
+      console.log("checkParkingStatus", res);
+      if(res.data.active){
+        set({hasParkingSlot:name});
+      }
       return res.data;
     } catch (error) {
       console.error('Error checking parking status:', error);
       return { active: false };
     }
-  },
+    },
+
+    // setting parking stol alocated
+    setParkingSlot : async (name) => {
+      set({hasParkingSlot:name});
+    }
     }
 })

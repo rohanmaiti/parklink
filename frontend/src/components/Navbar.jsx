@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import Button from '@mui/material/Button';
 
-export const Navbar = ({ handleLogout }) => {
+export const Navbar = ( ) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const { authUser } = useAuthStore();
+  const { authUser , logout } = useAuthStore();
 
   function handleLoginClick() {
     navigate("/login");
@@ -18,6 +18,9 @@ export const Navbar = ({ handleLogout }) => {
     else{
       navigate("/bookslots");
     }
+  }
+  function handleLogout(){
+    logout();
   }
 
   return (
