@@ -1,9 +1,11 @@
-const router = require("express").Router();
-const {handleEntry, handleExit, checkParkingStatus} = require("../controllers/parking.controller")
-const protectedRoute = require("../middlewire/auth.middlewire")
+import express from 'express';
+import { handleEntry, handleExit, checkParkingStatus } from '../controllers/parking.controller.js';
+import protectedRoute from '../middlewire/auth.middlewire.js';
 
-router.post("/entry",protectedRoute,handleEntry);
-router.post("/exit",protectedRoute,handleExit);
-router.post("/status",protectedRoute,checkParkingStatus);
+const router = express.Router();
 
-module.exports = router;
+router.post('/entry', protectedRoute, handleEntry);
+router.post('/exit', protectedRoute, handleExit);
+router.post('/status', protectedRoute, checkParkingStatus);
+
+export default router;

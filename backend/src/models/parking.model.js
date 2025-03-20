@@ -1,10 +1,10 @@
 // models/ParkingLog.js
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const parkingLogSchema = new mongoose.Schema({
   email: {
-    type:String,
-    require:true
+    type: String,
+    required: true
   },
   slotName: String, // Track which slot user parked in
   entryTime: Date,
@@ -12,4 +12,4 @@ const parkingLogSchema = new mongoose.Schema({
 });
 
 const ParkingLog = mongoose.model('ParkingLog', parkingLogSchema);
-module.exports = ParkingLog;
+export default ParkingLog;
