@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -12,7 +12,14 @@ const parkingData = [
 const BookSlot = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const { hasParkingSlot } = useAuthStore();
+  const { hasParkingSlot, checkParkingStatus } = useAuthStore();
+
+  // change done here for proper red dot management
+  useEffect(()=>{
+    parkingData.forEach(ele=>{
+      checkParkingStatus(ele.name);
+    })
+  },[])
 
   const filteredData = parkingData.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())

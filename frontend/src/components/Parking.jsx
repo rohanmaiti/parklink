@@ -71,10 +71,12 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
           if (!hasParkingSlot) {
             await axiosInstance.post('/parking/entry', { qrData: result.data, name });
             setParkingStarted({ status: true, name });
-            new Audio('/beep-sound.mp3').play();
+            // new Audio('/beep-sound.mp3').play();
             toast.success('Parking started successfully!');
             setParkingSlot(name);
             setActiveParkingSlot(name);
+            // change here for properly stop camera after scanning 
+            stopCamera();
           } else {
             const res = await axiosInstance.post('/parking/exit', { qrData: result.data, name });
             setParkingStarted({ status: false, name: null });
@@ -83,7 +85,8 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
   
             const duration = res.data.duration;
             const totalCost = duration * cost;
-  
+            // change here for properly stop camera after scanning 
+            stopCamera();
             toast.success(`Parking ended. Duration: ${duration} hours`);
             navigate('/checkout', { state: { name, duration, cost: totalCost } });
           }
