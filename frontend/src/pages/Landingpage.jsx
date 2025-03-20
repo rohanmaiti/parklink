@@ -4,7 +4,7 @@ import { Navbar } from '../components/Navbar';
 import { TypingEffect } from '../components/TypingEffect';
 import { Services } from '../components/Services';
 import { LocateSection } from '../components/LocateSection';
-import { DetailSection } from '../components/Detailsection';
+import { DetailSection } from '../components/DetailSection';
 import { AboutSection } from '../components/AboutSection';
 import { HomeSection } from '../components/HomeSection';
 
