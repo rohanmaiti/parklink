@@ -13,12 +13,16 @@ async function handleEntry(req, res) {
   }
 
   const existingLog = await ParkingLog.findOne({ email, exitTime: null });
+  // console.log('handleEntry function till here 0');
+  console.log(existingLog);
   if (existingLog) {
     return res.status(400).json({ message: 'User already parked' });
   }
+  // console.log('handleEntry function till here 1');
 
   const newLog = new ParkingLog({ email, entryTime: new Date(), slotName: name });
   await newLog.save();
+  console.log('handleEntry function till here 2');
 
   res.status(200).json({ message: 'Entry recorded successfully' });
 }
