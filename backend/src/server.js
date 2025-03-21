@@ -24,7 +24,7 @@ app.use(cors({
     'https://8479-152-59-85-173.ngrok-free.app',
     'https://*.ngrok-free.app'
   ],
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
 }));
 

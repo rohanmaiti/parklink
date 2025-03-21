@@ -30,7 +30,6 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
     };
 
     fetchParkingStatus();
-
     // Connect to Socket.IO
     // const socket = io('http://localhost:4000'); // Update to your server URL
     // socket.on('arduinoData', (data) => {
@@ -66,6 +65,7 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
       videoRef.current,
       async result => {
         console.log('QR Code detected:', result);
+        qrScanner.stop(); 
         stopCamera();
         try {
           if (!hasParkingSlot) {
@@ -76,6 +76,7 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
             setParkingSlot(name);
             setActiveParkingSlot(name);
             // change here for properly stop camera after scanning 
+            qrScanner.stop(); 
             stopCamera();
           } else {
             const res = await axiosInstance.post('/parking/exit', { qrData: result.data, name });
@@ -91,6 +92,8 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
             navigate('/checkout', { state: { name, duration, cost: totalCost } });
           }
         } catch (error) {
+          stopCamera();
+          qrScanner.stop(); 
           console.error('Error managing parking:', error);
           toast.error('Failed to manage parking.');
         }
@@ -129,7 +132,7 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
           {hasParkingSlot === name ? 'Get Out' : 'Get In'}
         </button>
 
-        <div className={`w-full text-center py-3 mb-4 rounded-lg ${slotsAvailable ? 'bg-green-500' : 'bg-red-500'}`}>
+        <div className={`w-full text-center py-3 mb-4 rounded-slg ${slotsAvailable ? 'bg-green-500' : 'bg-red-500'}`}>
           {slotsAvailable ? 'SLOT AVAILABLE' : 'SLOT FULL'}
         </div>
         
