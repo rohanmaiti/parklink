@@ -32,14 +32,16 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
     fetchParkingStatus();
     // Connect to Socket.IO
     // const socket = io('http://localhost:4000'); // Update to your server URL
-    // socket.on('arduinoData', (data) => {
-    //   const slotCount = parseInt(data.sensorData);
-    //   console.log(data.sensorData);
-    //   setAvailableSlots(slotCount);
-    // });
+    const socket = io('https://parklink-rohanmaiti.onrender.com'); // Update to your server URL
+    socket.on('arduinoData', (data) => {
+      const slotCount = parseInt(data.sensorData);
+      console.log(data.sensorData);
+      setAvailableSlots(slotCount);
+    });
 
     return () => {
-      // socket.disconnect();
+      // commnet this if not connected to COM3 
+      socket.disconnect();
       stopCamera();
     };
   }, []);
@@ -144,18 +146,15 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
           {hasParkingSlot === name ? 'Get Out' : 'Get In'}
         </button>
 
-        <div className={`w-full text-center py-3 mb-4 rounded-slg ${slotsAvailable ? 'bg-green-500' : 'bg-red-500'}`}>
+        {/* <div className={`w-full text-center py-3 mb-4 rounded-slg ${slotsAvailable ? 'bg-green-500' : 'bg-red-500'}`}>
           {slotsAvailable ? 'SLOT AVAILABLE' : 'SLOT FULL'}
-        </div>
+        </div> */}
         
-        {/* if running on localhost and com3 connected then turn this on  */}
-        {
-        /*
+        {/* if running on localhost and com3 connected then turn this on  */}        
         <div className={`w-full text-center py-3 mb-4 rounded-lg ${availableSlots >= 0 && availableSlots < 3 ? 'bg-green-500' : 'bg-red-500'}`}>
           {availableSlots >= 3 ? 'SLOT FULL' : `${3 - availableSlots} Slots Available`}
         </div>
-        */
-        }
+       
 
         
 
