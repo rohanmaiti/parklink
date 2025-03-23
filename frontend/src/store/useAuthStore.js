@@ -1,8 +1,6 @@
 import {create} from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-
 export const useAuthStore = create((set)=>{
 
     return {
@@ -38,7 +36,7 @@ export const useAuthStore = create((set)=>{
             // alert(JSON.stringify(res.data));
             set({ authUser: res.data });
             toast.success("Account created successfully");
-            navigate("/bookslots");
+            navigate("/");
           } catch (error) {
             console.log(error);
             toast.error(error.response.data.message);
