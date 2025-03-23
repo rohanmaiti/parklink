@@ -92,11 +92,16 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
             setParkingSlot(undefined);
   
             const duration = res.data.duration;
-            const totalCost = duration * cost;
+            const hours = Math.floor(duration);
+            const minutes = Math.round((duration - hours) * 60);
+            const formattedDuration = `${hours} hours ${minutes} minutes`;
+            
+            const totalCost = (duration * cost).toFixed(2);
+            const formattedCost = `${parseFloat(totalCost).toFixed(2)}`;
             // change here for properly stop camera after scanning 
             stopCamera();
-            toast.success(`Parking ended. Duration: ${duration} hours`);
-            navigate('/checkout', { state: { name, duration, cost: totalCost } });
+            toast.success(`Parking ended. Duration: ${formattedDuration}`);
+            navigate('/checkout', { state: { name, duration:formattedDuration, cost: formattedCost } });
           }
         } catch (error) {
           stopCamera();

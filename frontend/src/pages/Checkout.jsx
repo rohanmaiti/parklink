@@ -24,7 +24,7 @@ export const Checkout = () => {
 
       <div className="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
         <p className="mb-4"><span className="font-semibold">Parking Slot:</span> {name}</p>
-        <p className="mb-4"><span className="font-semibold">Duration:</span> {duration} hours</p>
+        <p className="mb-4"><span className="font-semibold">Duration:</span> {duration}</p>
         <p className="mb-4"><span className="font-semibold">Total Cost:</span> ₹{cost}</p>
 
         <button
