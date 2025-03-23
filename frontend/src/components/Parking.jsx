@@ -45,6 +45,12 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
   }, []);
 
   const openCamera = async () => {
+    if(streamRef.current){
+      toast('Camera already open', {
+        icon: '📷',
+      });
+      return;
+    }else{
     try {
       const constraints = { video: { facingMode: 'environment' } };
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -57,6 +63,7 @@ export const Parking = ({ name, cost, slotsAvailable, contactNumber, emergencyNu
       }
     } catch (error) {
       alert('Unable to access the camera: ' + error.message);
+    }
     }
   };
 
