@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 export const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { signup, isSigningUp } = useAuthStore();
   const handleChange = (e) => {
@@ -26,13 +25,11 @@ export const Signup = () => {
     e.preventDefault();
     console.log(formData);
     if (!validate()) return;
-
-    // isSigningUp(true);
     try {
       // alert(JSON.stringify(formData));
       signup(formData, navigate);
     } catch (error) {
-      alert("Signup Failed");
+      console.log("Signup Failed");
     }
   };
 
@@ -55,7 +52,7 @@ export const Signup = () => {
           {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
         </div>
         <button type="submit" className="block w-full p-3 text-center rounded-sm text-gray-50 bg-violet-600 hover:cursor-pointer">
-          {loading ? "Signing up..." : "Sign up"}
+          {isSigningUp ? "Signing up..." : "Sign up"}
         </button>
       </form>
       <p className="text-xs text-center sm:px-6 text-gray-400">Already have an account?
