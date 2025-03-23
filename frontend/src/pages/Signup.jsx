@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../store/useAuthStore';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -56,7 +56,7 @@ export const Signup = () => {
         </button>
       </form>
       <p className="text-xs text-center sm:px-6 text-gray-400">Already have an account?
-        <a href="/login" className="underline text-gray-300"> Log in</a>
+        <NavLink to="/login" className="underline text-gray-300"> Log in</NavLink>
       </p>
       <button
         className="absolute bottom-4 left-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600"
