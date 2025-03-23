@@ -13,17 +13,11 @@ export const Landingpage = ({loginUser, setLoginuser}) => {
     <>
       <div className="h-screen overflow-y-auto scroll-smooth">
         <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-          <Navbar loginUser={loginUser} />
+          <Navbar/>
         </div>
 
         {/* Home Section */}
         <section id="home" className="min-h-screen flex flex-col md:flex-row bg-blue-100">
-          {/* <div className=" w-full md:w-3/5 p-4">
-            <ImageSlider />
-          </div>
-          <div className="flex justify-center items-center  w-full md:w-2/5 p-4">
-            <TypingEffect text="Welcome to ParkLink, book your slot now!" />
-          </div> */}
           <HomeSection />
         </section>
 

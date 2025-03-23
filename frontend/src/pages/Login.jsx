@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthStore } from '../store/useAuthStore';
 import {  NavLink, useNavigate } from 'react-router-dom';
 
@@ -6,9 +6,8 @@ export const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const { login, isLoggingIn } = useAuthStore();
-
+  const { login, isLoggingIng } = useAuthStore();
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,7 +27,6 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    setLoading(true);
     try {
       e.preventDefault();
       login(formData, navigate);
@@ -36,7 +34,6 @@ export const Login = () => {
     } catch (error) {
       alert("Login Failed");
     }
-    setLoading(false);
   };
 
   return (
@@ -61,7 +58,7 @@ export const Login = () => {
           </div>
         </div>
         <button type="submit" className="block w-full p-3 text-center rounded-sm text-gray-50 bg-violet-600 hover:cursor-pointer">
-          {isLoggingIn ? "Logging in..." : "Login"}
+          {isLoggingIng == true ? "Logging in..." : "Login"}
         </button>
       </form>
       {/* LOGIN WITH SOCIAL ACCOUNT  */}
@@ -79,7 +76,7 @@ export const Login = () => {
         </button>
       </div> */}
       <p className="text-xs text-center sm:px-6 text-gray-400">Don't have an account?
-        <a href="/signup" className="underline text-gray-300"> Sign up</a>
+        <NavLink href="/signup" className="underline text-gray-300"> Sign up</NavLink>
       </p>
       <button
         className="absolute bottom-4 left-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600"
