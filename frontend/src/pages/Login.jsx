@@ -76,7 +76,7 @@ export const Login = () => {
         </button>
       </div> */}
       <p className="text-xs text-center sm:px-6 text-gray-400">Don't have an account?
-        <NavLink href="/signup" className="underline text-gray-300"> Sign up</NavLink>
+        <NavLink to="/signup" className="underline text-gray-300"> Sign up</NavLink>
       </p>
       <button
         className="absolute bottom-4 left-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600"
