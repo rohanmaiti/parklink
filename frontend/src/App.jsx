@@ -16,6 +16,7 @@ import { ProfilePage } from './pages/ProfilePage'
 import { Parking } from './components/Parking'
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { LoadingSkeleton } from './components/LoadingSkeleton'
+import { YouTubeVideosPage } from './pages/YouTubeVideosPage'
 function App() {
   const {checkAuth, authUser, isCheckingAuth} = useAuthStore();
   const [count, setCount] = useState(0)
@@ -42,6 +43,8 @@ function App() {
        <Route path="checkout" element={<Checkout/>} />
        <Route path="profile" element={<ProfilePage/>} />
        </Route>
+
+       <Route path="/showVideo" element={<YouTubeVideosPage/>}/>
       
       </Routes>
       <Toaster/>

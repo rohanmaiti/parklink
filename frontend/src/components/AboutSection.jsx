@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const AboutSection = () => {
   return (
@@ -27,14 +28,12 @@ export const AboutSection = () => {
           </p>
 
           {/* Project Link */}
-          <a
-            href="https://yourprojectlink.com"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/showVideo"
             className="text-yellow-400 underline hover:text-yellow-300"
           >
             Checkout the full project here &raquo;
-          </a>
+          </Link>
         </div>
       </div>
 

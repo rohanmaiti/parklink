@@ -29,28 +29,28 @@ app.use(cors({
 }));
 
 // WebSocket Section (Commented)
-const io = new Server(server, {
-  cors: {
-    origin: ['http://localhost:5173', 'https://parklink-rohanmaiti.onrender.com'],
-    methods: ['GET', 'POST']
-  }
-});
-const port = new SerialPort({
-  path: 'COM3',
-  baudRate: 9600
-});
-const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-io.on('connection', (socket) => {
-  console.log('A new user connected');
-  socket.emit('initialData', { message: 'Initial data' });
-  parser.on('data', (data) => {
-    console.log('Received from Arduino:', data);
-    io.emit('arduinoData', { sensorData: data });
-  });
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: ['http://localhost:5173', 'https://parklink-rohanmaiti.onrender.com'],
+//     methods: ['GET', 'POST']
+//   }
+// });
+// const port = new SerialPort({
+//   path: 'COM3',
+//   baudRate: 9600
+// });
+// const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
+// io.on('connection', (socket) => {
+//   console.log('A new user connected');
+//   socket.emit('initialData', { message: 'Initial data' });
+//   parser.on('data', (data) => {
+//     console.log('Received from Arduino:', data);
+//     io.emit('arduinoData', { sensorData: data });
+//   });
+//   socket.on('disconnect', () => {
+//     console.log('A user disconnected');
+//   });
+// });
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, '0.0.0.0', async () => {
